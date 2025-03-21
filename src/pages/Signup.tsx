@@ -5,9 +5,10 @@ import { ButtonCustom } from "@/components/ui/button-custom";
 import { supabase } from "@/lib/db";
 import { toast } from "sonner";
 
-const Login = () => {
+const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -15,24 +16,39 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    // Validate password match
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match");
+      return;
+    }
+
+    // Validate password strength
+    if (password.length < 6) {
+      toast.error("Password must be at least 6 characters");
+      return;
+    }
+
     try {
       setLoading(true);
       
-      // Sign in with Supabase Auth
-      const { data, error } = await supabase.auth.signInWithPassword({
+      // Sign up with Supabase Auth
+      const { data, error } = await supabase.auth.signUp({
         email,
         password,
+        options: {
+          emailRedirectTo: `${window.location.origin}/setup`,
+        },
       });
 
       if (error) throw error;
 
       if (data.user) {
-        toast.success("Login successful!");
-        // Navigate to dashboard after successful login
-        navigate("/dashboard");
+        toast.success("Registration successful! Please check your email for verification.");
+        // Navigate to setup page after successful signup
+        navigate("/setup");
       }
     } catch (error: any) {
-      toast.error(error.message || "Failed to log in");
+      toast.error(error.message || "An error occurred during signup");
     } finally {
       setLoading(false);
     }
@@ -48,10 +64,10 @@ const Login = () => {
       <div className="w-full max-w-md space-y-8 animate-fade-in">
         <div className="text-center">
           <h2 className="mt-6 text-3xl font-bold tracking-tight bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            Welcome Back
+            Create an Account
           </h2>
           <p className="mt-2 text-sm text-gray-600">
-            Sign in to access your medical dashboard
+            Sign up to start tracking your health journey
           </p>
         </div>
 
@@ -82,7 +98,7 @@ const Login = () => {
                   id="password"
                   name="password"
                   type={showPassword ? "text" : "password"}
-                  autoComplete="current-password"
+                  autoComplete="new-password"
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -102,24 +118,20 @@ const Login = () => {
               </div>
             </div>
 
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <input
-                  id="remember-me"
-                  name="remember-me"
-                  type="checkbox"
-                  className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                />
-                <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-700">
-                  Remember me
-                </label>
-              </div>
-
-              <div className="text-sm">
-                <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
-                  Forgot your password?
-                </a>
-              </div>
+            <div>
+              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
+                Confirm Password
+              </label>
+              <input
+                id="confirmPassword"
+                name="confirmPassword"
+                type={showPassword ? "text" : "password"}
+                autoComplete="new-password"
+                required
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              />
             </div>
 
             <div>
@@ -129,73 +141,16 @@ const Login = () => {
                 className="w-full"
                 disabled={loading}
               >
-                {loading ? "Signing in..." : "Sign in"}
+                {loading ? "Creating account..." : "Sign up"}
               </ButtonCustom>
             </div>
           </form>
-
-          <div className="mt-6">
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300" />
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white/80 text-gray-500">Or continue with</span>
-              </div>
-            </div>
-
-            <div className="mt-6 grid grid-cols-2 gap-3">
-              <ButtonCustom
-                variant="outline"
-                type="button"
-                className="w-full flex justify-center"
-                onClick={async () => {
-                  try {
-                    const { error } = await supabase.auth.signInWithOAuth({
-                      provider: 'google',
-                      options: {
-                        redirectTo: `${window.location.origin}/dashboard`,
-                      },
-                    });
-                    
-                    if (error) throw error;
-                  } catch (error: any) {
-                    toast.error(error.message || "Failed to sign in with Google");
-                  }
-                }}
-              >
-                Google
-              </ButtonCustom>
-              
-              <ButtonCustom
-                variant="outline"
-                type="button"
-                className="w-full flex justify-center"
-                onClick={async () => {
-                  try {
-                    const { error } = await supabase.auth.signInWithOAuth({
-                      provider: 'azure',
-                      options: {
-                        redirectTo: `${window.location.origin}/dashboard`,
-                      },
-                    });
-                    
-                    if (error) throw error;
-                  } catch (error: any) {
-                    toast.error(error.message || "Failed to sign in with Microsoft");
-                  }
-                }}
-              >
-                Microsoft
-              </ButtonCustom>
-            </div>
-          </div>
         </div>
 
         <p className="mt-2 text-center text-sm text-gray-600">
-          Not a member?{" "}
-          <Link to="/signup" className="font-medium text-indigo-600 hover:text-indigo-500">
-            Create an account
+          Already have an account?{" "}
+          <Link to="/login" className="font-medium text-indigo-600 hover:text-indigo-500">
+            Sign in
           </Link>
         </p>
       </div>
@@ -203,4 +158,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup; 
