@@ -1,58 +1,86 @@
-# Welcome to your Lovable project
+# Health Trend Keeper
 
-## Project info
+A modern web application that helps users track their health metrics by intelligently extracting data from medical reports and visualizing trends over time.
 
-**URL**: https://lovable.dev/projects/7d4587f7-b4e5-410c-aa91-5aa2170b0bd5
+![Health Trend Keeper](https://placeholder-image.com/health-trend-keeper.png)
 
-## How can I edit this code?
+## Features
 
-There are several ways of editing your application.
+- **Intelligent Report Processing**: Upload your medical reports (PDF, JPG, PNG) and let AI extract key health metrics automatically
+- **Health Metrics Tracking**: Monitor blood pressure, cholesterol, glucose levels, and weight over time
+- **Interactive Visualizations**: View your health trends with interactive charts featuring threshold indicators for normal/abnormal values
+- **Profile Management**: Maintain your personal health profile and track weight measurements manually
+- **AI-Powered Chat**: Ask questions about your health data and get insights through a conversational interface
+- **Secure Authentication**: Your health data remains private with comprehensive user authentication
+- **Responsive Design**: Access your health information on any device with a fully responsive interface
 
-**Use Lovable**
+## Technologies
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/7d4587f7-b4e5-410c-aa91-5aa2170b0bd5) and start prompting.
+- **Frontend**: React, TypeScript, Vite, TailwindCSS, ShadcnUI
+- **Database & Auth**: Supabase (PostgreSQL, Authentication, Storage)
+- **ORM**: DrizzleORM for type-safe database operations
+- **AI Integration**: OpenAI GPT-4o for report processing and chat functionality
+- **PDF Processing**: pdf-parse for text extraction
 
-Changes made via Lovable will be committed automatically to this repo.
+## Getting Started
 
-**Use your preferred IDE**
+### Prerequisites
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- Node.js & npm - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+- A Supabase account for the backend services
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+### Installation
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
+# Clone the repository
 git clone <YOUR_GIT_URL>
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# Navigate to the project directory
+cd health-trend-keeper
 
-# Step 3: Install the necessary dependencies.
-npm i
+# Install dependencies
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Create a .env file with your Supabase credentials
+echo "VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+VITE_OPENAI_API_KEY=your_openai_api_key" > .env
+
+# Start the development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+### Database Setup
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+1. Create a Supabase project at [supabase.com](https://supabase.com)
+2. Set up the following tables in your Supabase database:
+   - `users` - For user profiles
+   - `reports` - For uploaded medical reports
+   - `measurements` - For health metrics extracted from reports
+3. Create a storage bucket named `reports` for file uploads
+4. Set up Row-Level Security policies for your tables
+5. Run database migrations:
+   ```
+   npm run db:migrate
+   ```
 
-**Use GitHub Codespaces**
+## Usage
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+1. **Register & Login**: Create an account and complete your profile setup
+2. **Upload Reports**: Upload your medical reports through the Reports page
+3. **View Metrics**: Review extracted health metrics from your reports
+4. **Track Trends**: Analyze your health data using the Charts page
+5. **Chat with AI**: Ask questions about your health data through the chat interface
 
-## What technologies are used for this project?
+## Development
 
-This project is built with .
+- `npm run dev` - Start the development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview the production build
+- `npm run db:generate` - Generate database migrations
+- `npm run db:migrate` - Run database migrations
+
+## License
 
 - Vite
 - TypeScript
