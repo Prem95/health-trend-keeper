@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ButtonCustom } from "./ui/button-custom";
@@ -8,6 +8,7 @@ import { ButtonCustom } from "./ui/button-custom";
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,6 +22,11 @@ const Header = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Close mobile menu when route changes
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [location.pathname]);
 
   const toggleMobileMenu = () => setMobileMenuOpen(!mobileMenuOpen);
 
@@ -58,9 +64,11 @@ const Header = () => {
               {link.name}
             </Link>
           ))}
-          <ButtonCustom variant="primary" size="sm">
-            Get Started
-          </ButtonCustom>
+          <Link to="/login">
+            <ButtonCustom variant="primary" size="sm">
+              Get Started
+            </ButtonCustom>
+          </Link>
         </nav>
 
         {/* Mobile Menu Button */}
@@ -91,9 +99,11 @@ const Header = () => {
               {link.name}
             </Link>
           ))}
-          <ButtonCustom variant="primary" size="md" onClick={() => setMobileMenuOpen(false)}>
-            Get Started
-          </ButtonCustom>
+          <Link to="/login">
+            <ButtonCustom variant="primary" size="md" onClick={() => setMobileMenuOpen(false)}>
+              Get Started
+            </ButtonCustom>
+          </Link>
         </nav>
       </div>
     </header>
