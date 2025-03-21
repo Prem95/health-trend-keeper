@@ -1,79 +1,51 @@
 
-import { useEffect, useRef } from "react";
-import { ChevronDown } from "lucide-react";
+import { useEffect } from "react";
+import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import { ButtonCustom } from "./ui/button-custom";
 
 const Hero = () => {
-  const heroRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     // Apply animation classes once on component mount
     const elements = document.querySelectorAll('.hero-animate');
-    elements.forEach((el, index) => {
-      setTimeout(() => {
-        el.classList.add('animate-fade-in');
-        el.classList.remove('opacity-0');
-      }, index * 150);
+    elements.forEach((el) => {
+      el.classList.add('fade-in-now');
     });
   }, []);
 
-  const scrollToFeatures = () => {
-    const featuresSection = document.getElementById("features");
-    if (featuresSection) {
-      featuresSection.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
   return (
-    <div 
-      ref={heroRef}
-      className="min-h-screen flex flex-col items-center justify-center px-6 py-24 relative overflow-hidden"
-    >
-      {/* Medical-themed gradient background */}
-      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50"></div>
-      <div className="absolute top-1/4 right-1/5 -z-10 w-72 h-72 bg-gradient-to-r from-teal-200 to-blue-200 rounded-full blur-3xl opacity-20"></div>
-      <div className="absolute bottom-1/4 left-1/5 -z-10 w-96 h-96 bg-gradient-to-r from-purple-200 to-pink-200 rounded-full blur-3xl opacity-20"></div>
-      
-      <div className="max-w-5xl mx-auto text-center space-y-8">
-        <div className="hero-animate opacity-0 transition-all duration-700 ease-out">
-          <span className="inline-block text-sm font-medium bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 py-1.5 rounded-full mb-4">
-            Medical Intelligence
-          </span>
-        </div>
-        
-        <h1 className="hero-animate opacity-0 transition-all duration-700 delay-100 ease-out text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-balance max-w-3xl mx-auto leading-tight bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
-          Your Medical Autonomy, <br/>Centered on <span className="relative">YOU
-            <span className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-blue-400 to-purple-400"></span>
-          </span>
-        </h1>
-        
-        <p className="hero-animate opacity-0 transition-all duration-700 delay-200 ease-out text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto text-balance mt-6">
-          Take control of your health journey with personalized insights and intelligent monitoring. Your medical data, simplified and accessible.
-        </p>
-        
-        <div className="hero-animate opacity-0 transition-all duration-700 delay-300 ease-out flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
-          <Link to="/login">
-            <ButtonCustom size="lg" className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700">
-              Get Started
-            </ButtonCustom>
-          </Link>
-          <ButtonCustom variant="outline" size="lg" className="w-full sm:w-auto">
-            Learn More
-          </ButtonCustom>
+    <section className="relative min-h-screen section pt-32 pb-20 overflow-hidden">
+      <div className="container-custom">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div className="space-y-6 max-w-xl">
+            <h1 className="hero-animate opacity-0 text-5xl md:text-6xl font-extrabold tracking-tight leading-tight">
+              Live the life you <br />
+              <span className="italic">envision</span>
+            </h1>
+            
+            <p className="hero-animate opacity-0 text-lg md:text-xl text-gray-700 max-w-md">
+              Break the routine. Test the life you crave with AI-generated daily plans tailored to your ideal future.
+            </p>
+            
+            <div className="hero-animate opacity-0 pt-4">
+              <Link to="/login">
+                <button className="btn-outline rounded-md text-base font-semibold cursor-hover">
+                  START YOUR JOURNEY
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </button>
+              </Link>
+            </div>
+          </div>
+          
+          <div className="hero-animate opacity-0 flex justify-center lg:justify-end">
+            <img 
+              src="/lovable-uploads/0a0d7457-9a84-47a4-a29a-9c581477e7aa.png" 
+              alt="Person visualization" 
+              className="w-full max-w-md rounded-lg"
+            />
+          </div>
         </div>
       </div>
-      
-      <div className="absolute bottom-12 left-0 right-0 flex justify-center hero-animate opacity-0 transition-all duration-700 delay-400 ease-out">
-        <button 
-          onClick={scrollToFeatures}
-          className="animate-bounce p-2 rounded-full transition-colors hover:bg-secondary/60"
-          aria-label="Scroll down"
-        >
-          <ChevronDown size={24} />
-        </button>
-      </div>
-    </div>
+    </section>
   );
 };
 

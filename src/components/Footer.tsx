@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="bg-secondary/30 py-16 px-6">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+    <footer className="bg-white py-12 px-6 border-t border-gray-100">
+      <div className="container-custom">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           <div className="space-y-4">
-            <h3 className="text-xl font-bold">Minimal</h3>
+            <h3 className="text-xl font-bold">LifePulse</h3>
             <p className="text-muted-foreground text-sm max-w-xs">
-              Crafted with attention to detail and a focus on delivering exceptional experiences.
+              Testing your ideal future today, one day at a time.
             </p>
           </div>
           
@@ -70,16 +70,16 @@ const Footer = () => {
               </li>
               <li>
                 <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  GitHub
+                  LinkedIn
                 </a>
               </li>
             </ul>
           </div>
         </div>
         
-        <div className="mt-16 pt-8 border-t border-border/40 flex flex-col md:flex-row justify-between items-center">
+        <div className="mt-12 pt-6 border-t border-border/40 flex flex-col md:flex-row justify-between items-center">
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Minimal. All rights reserved.
+            © {new Date().getFullYear()} LifePulse. All rights reserved.
           </p>
           
           <div className="flex space-x-6 mt-4 md:mt-0">
