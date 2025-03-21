@@ -8,22 +8,14 @@ const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleIntersection: IntersectionObserverCallback = (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("animate-fade-in");
-        }
-      });
-    };
-
-    const observer = new IntersectionObserver(handleIntersection, {
-      threshold: 0.1,
+    // Apply animation classes once on component mount
+    const elements = document.querySelectorAll('.hero-animate');
+    elements.forEach((el, index) => {
+      setTimeout(() => {
+        el.classList.add('animate-fade-in');
+        el.classList.remove('opacity-0');
+      }, index * 150);
     });
-
-    const elements = document.querySelectorAll(".hero-animate");
-    elements.forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
   }, []);
 
   const scrollToFeatures = () => {
@@ -44,23 +36,23 @@ const Hero = () => {
       <div className="absolute bottom-1/4 left-1/5 -z-10 w-96 h-96 bg-gradient-to-r from-purple-200 to-pink-200 rounded-full blur-3xl opacity-20"></div>
       
       <div className="max-w-5xl mx-auto text-center space-y-8">
-        <div className="hero-animate opacity-0">
+        <div className="hero-animate opacity-0 transition-all duration-700 ease-out">
           <span className="inline-block text-sm font-medium bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 py-1.5 rounded-full mb-4">
             Medical Intelligence
           </span>
         </div>
         
-        <h1 className="hero-animate opacity-0 text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-balance max-w-3xl mx-auto leading-tight bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
+        <h1 className="hero-animate opacity-0 transition-all duration-700 delay-100 ease-out text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-balance max-w-3xl mx-auto leading-tight bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
           Your Medical Autonomy, <br/>Centered on <span className="relative">YOU
             <span className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-blue-400 to-purple-400"></span>
           </span>
         </h1>
         
-        <p className="hero-animate opacity-0 text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto text-balance mt-6">
+        <p className="hero-animate opacity-0 transition-all duration-700 delay-200 ease-out text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto text-balance mt-6">
           Take control of your health journey with personalized insights and intelligent monitoring. Your medical data, simplified and accessible.
         </p>
         
-        <div className="hero-animate opacity-0 flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
+        <div className="hero-animate opacity-0 transition-all duration-700 delay-300 ease-out flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
           <Link to="/login">
             <ButtonCustom size="lg" className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700">
               Get Started
@@ -72,7 +64,7 @@ const Hero = () => {
         </div>
       </div>
       
-      <div className="absolute bottom-12 left-0 right-0 flex justify-center hero-animate opacity-0">
+      <div className="absolute bottom-12 left-0 right-0 flex justify-center hero-animate opacity-0 transition-all duration-700 delay-400 ease-out">
         <button 
           onClick={scrollToFeatures}
           className="animate-bounce p-2 rounded-full transition-colors hover:bg-secondary/60"
