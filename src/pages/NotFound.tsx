@@ -1,5 +1,9 @@
-import { useLocation } from "react-router-dom";
+
+import { useLocation, Link } from "react-router-dom";
 import { useEffect } from "react";
+import { ButtonCustom } from "@/components/ui/button-custom";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const NotFound = () => {
   const location = useLocation();
@@ -12,14 +16,26 @@ const NotFound = () => {
   }, [location.pathname]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">404</h1>
-        <p className="text-xl text-gray-600 mb-4">Oops! Page not found</p>
-        <a href="/" className="text-blue-500 hover:text-blue-700 underline">
-          Return to Home
-        </a>
-      </div>
+    <div className="min-h-screen bg-background flex flex-col">
+      <Header />
+      <main className="flex-grow flex items-center justify-center px-6 py-24">
+        <div className="max-w-md mx-auto text-center space-y-6">
+          <span className="inline-block text-sm font-medium bg-secondary px-4 py-1.5 rounded-full">
+            404 Error
+          </span>
+          <h1 className="text-4xl font-bold">Page not found</h1>
+          <p className="text-muted-foreground">
+            Sorry, we couldn't find the page you're looking for. It might have been
+            moved or doesn't exist.
+          </p>
+          <div className="pt-4">
+            <ButtonCustom asChild size="lg">
+              <Link to="/">Return Home</Link>
+            </ButtonCustom>
+          </div>
+        </div>
+      </main>
+      <Footer />
     </div>
   );
 };
