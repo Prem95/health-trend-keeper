@@ -1,5 +1,6 @@
 
 import * as React from "react";
+import { Slot } from "@radix-ui/react-slot";
 import { cn } from "@/lib/utils";
 
 interface ButtonCustomProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -7,12 +8,15 @@ interface ButtonCustomProps extends React.ButtonHTMLAttributes<HTMLButtonElement
   size?: "sm" | "md" | "lg";
   children: React.ReactNode;
   className?: string;
+  asChild?: boolean;
 }
 
 const ButtonCustom = React.forwardRef<HTMLButtonElement, ButtonCustomProps>(
-  ({ className, variant = "primary", size = "md", children, ...props }, ref) => {
+  ({ className, variant = "primary", size = "md", children, asChild = false, ...props }, ref) => {
+    const Comp = asChild ? Slot : "button";
+    
     return (
-      <button
+      <Comp
         className={cn(
           "relative inline-flex items-center justify-center whitespace-nowrap rounded-md font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 overflow-hidden group",
           {
@@ -32,7 +36,7 @@ const ButtonCustom = React.forwardRef<HTMLButtonElement, ButtonCustomProps>(
       >
         <span className="relative z-10">{children}</span>
         <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></span>
-      </button>
+      </Comp>
     );
   }
 );
