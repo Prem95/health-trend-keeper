@@ -90,6 +90,7 @@
 @layer base {
   * {
     @apply border-border;
+    scroll-behavior: smooth;
   }
 
   body {
@@ -120,8 +121,8 @@
 
 .animate-on-scroll {
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.17, 0.67, 0.35, 0.95);
 }
 
 .animate-on-scroll.is-visible {
@@ -157,4 +158,67 @@
 .link-underline:hover::after {
   transform: scaleX(1);
   transform-origin: bottom left;
+}
+
+/* Medical themed animations */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 20px 5px rgba(99, 102, 241, 0.4);
+  }
+}
+
+.pulse-glow {
+  animation: pulse-glow 3s infinite;
+}
+
+/* Parallax scrolling effect */
+.parallax-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.parallax-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 120%;
+  transform: translateZ(-1px) scale(2);
+  z-index: -1;
+}
+
+/* Reveal animation for scrolling */
+@keyframes reveal {
+  0% {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.reveal {
+  animation: reveal 0.8s cubic-bezier(0.17, 0.67, 0.35, 0.95) forwards;
+}
+
+/* Medical icon pulse effect */
+@keyframes medical-pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.medical-pulse {
+  animation: medical-pulse 2s ease-in-out infinite;
 }
