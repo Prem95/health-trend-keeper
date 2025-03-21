@@ -1,46 +1,65 @@
-import { useEffect } from "react";
-import { ArrowRight } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const Hero = () => {
+  const [animationComplete, setAnimationComplete] = useState(false);
+
   useEffect(() => {
-    // Apply animation classes once on component mount
-    const elements = document.querySelectorAll('.hero-animate');
-    elements.forEach((el) => {
-      el.classList.add('fade-in-now');
-    });
+    // Start animation sequence
+    setTimeout(() => setAnimationComplete(true), 500);
   }, []);
 
   return (
-    <section className="relative min-h-screen section pt-32 pb-20 overflow-hidden bg-gradient-to-br from-blue-50 via-purple-50 to-indigo-100">
-      <div className="container-custom">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <div className="space-y-8 flex flex-col items-start justify-center mx-auto lg:mx-0 lg:pl-8">
-            <h1 className="hero-animate opacity-0 text-5xl md:text-6xl font-extrabold tracking-tight leading-tight text-gray-900 [text-rendering:optimizeLegibility]">
-              Track how your health changes <br />
-              <span className="italic bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">autonomously</span>
+    <section className="min-h-screen flex items-center justify-center px-4 bg-white overflow-hidden">
+      {/* Abstract decorative elements */}
+      <div className="absolute inset-0 overflow-hidden opacity-15 pointer-events-none">
+        <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-indigo-300"></div>
+        <div className="absolute bottom-12 left-1/4 w-40 h-40 rounded-full bg-purple-200"></div>
+        <div className="absolute top-1/4 left-10 w-20 h-20 rounded-full bg-blue-200"></div>
+      </div>
+
+      <div className="max-w-7xl w-full mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 relative z-10">
+        {/* Text column */}
+        <div className="flex flex-col justify-center">
+          <div className={`transition-all duration-1000 ${animationComplete ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight text-gray-900 mb-8">
+              Health tracking,
+              <span className="block mt-1 text-indigo-600">
+                simplified.
+              </span>
             </h1>
             
-            <p className="hero-animate opacity-0 text-lg md:text-xl text-gray-700 tracking-wide">
-              The AI-powered health trend keeper that helps you track your health changes autonomously
+            <p className="text-lg text-gray-600 mb-12 max-w-md">
+              Understand your health journey through AI-powered insights from your medical reports.
             </p>
             
-            <div className="hero-animate opacity-0 pt-4">
-              <Link to="/login">
-                <button className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-6 py-3 rounded-md text-base font-semibold tracking-wide transition-all duration-300 shadow-md hover:shadow-lg flex items-center">
-                  START YOUR JOURNEY
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </button>
-              </Link>
-            </div>
+            <Link to="/login" className="inline-block">
+              <button className="group relative px-8 py-3 bg-indigo-600 text-white font-medium rounded-md overflow-hidden transition-all">
+                <span className="relative z-10">Get Started</span>
+                <div className="absolute inset-0 bg-indigo-800 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300"></div>
+              </button>
+            </Link>
           </div>
-          
-          <div className="hero-animate opacity-0 flex justify-center lg:justify-end">
-            <img 
-              src="/lovable-uploads/0a0d7457-9a84-47a4-a29a-9c581477e7aa.png" 
-              alt="Person visualization" 
-              className="w-full max-w-md rounded-lg shadow-xl"
-            />
+        </div>
+        
+        {/* Visual column */}
+        <div className="flex items-center justify-center">
+          <div className={`transition-all duration-1000 delay-300 ${animationComplete ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
+            <div className="relative">
+              {/* Stylized chart visualization */}
+              <div className="w-72 h-72 md:w-80 md:h-80 rounded-full border-4 border-gray-100 flex items-end justify-center overflow-hidden bg-gray-50">
+                <div className="flex items-end space-x-3 pb-12">
+                  <div className="w-8 bg-indigo-200 rounded-t-md h-20 animate-pulse"></div>
+                  <div className="w-8 bg-indigo-400 rounded-t-md h-32 animate-pulse"></div>
+                  <div className="w-8 bg-indigo-600 rounded-t-md h-24 animate-pulse"></div>
+                  <div className="w-8 bg-indigo-800 rounded-t-md h-40 animate-pulse"></div>
+                </div>
+              </div>
+              
+              {/* Decorative elements */}
+              <div className="absolute -top-3 -right-3 w-20 h-20 rounded-full bg-purple-100 border border-purple-200"></div>
+              <div className="absolute -bottom-4 -left-4 w-16 h-16 rounded-full bg-blue-100 border border-blue-200"></div>
+            </div>
           </div>
         </div>
       </div>
